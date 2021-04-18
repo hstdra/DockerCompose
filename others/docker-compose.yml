@@ -1,0 +1,67 @@
+version: "3.7"
+
+services: 
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    restart: always
+    networks:
+      - local-network
+    ports:
+      - 5775:5775/udp
+      - 5778:5778
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 9411:9411
+      - 14268:14268
+      - 16686:16686
+
+  # grafana:
+  #   image: grafana/grafana
+  #   container_name: grafana
+  #   # restart: unless-stopped
+  #   networks:
+  #     - local-network
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./grafana:/var/lib/grafana
+
+  # prometheus:
+  #   # build: ./prometheus
+  #   image: prom/prometheus
+  #   container_name: prometheus
+  #   # restart: unless-stopped
+  #   ports:
+  #     - '9090:9090'
+  #   networks:
+  #     - local-network
+  #   volumes:
+  #     - ./prometheus:/etc/prometheus
+
+  # redis:
+  #   image: redis
+  #   container_name: redis
+  #   restart: always
+  #   networks:
+  #     - local-network
+  #   ports:
+  #     - 6379:6379
+  #   volumes: 
+  #     - ./redis:/data
+
+  # redis-commander:
+  #   image: rediscommander/redis-commander
+  #   container_name: redis-commander
+  #   networks:
+  #     - local-network
+  #   restart: always
+  #   environment:
+  #     - REDIS_HOSTS=local:redis:6379
+  #   ports:
+  #     - 8081:8081
+
+networks:
+  local-network:
+    external:
+      name: local-network
